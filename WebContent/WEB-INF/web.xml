@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>BankApplication</display-name>
+	<servlet>
+	<servlet-name>CustomerloginPage</servlet-name>
+	<jsp-file>/index.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>CustomerloginPage</servlet-name>
+	<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	<servlet-name>CustomerDashBoard</servlet-name>
+	<jsp-file>/dashboard.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>CustomerDashBoard</servlet-name>
+	<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping>
+</web-app>

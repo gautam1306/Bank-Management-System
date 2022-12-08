@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<%@include file="navbar.html" %>
 <title>Customer Login</title>
 </head>
 <h1>Customer Login</h1>

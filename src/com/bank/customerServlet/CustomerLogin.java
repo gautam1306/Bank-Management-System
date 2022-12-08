@@ -1,4 +1,4 @@
-package com.bank.servlets;
+package com.bank.customerServlet;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ public class CustomerLogin extends HttpServlet{
 		try {
 		int customerID = Integer.parseInt(request.getParameter("customerID"));
 		String password = request.getParameter("password");
-//		response.getWriter().print(customerID);
+		response.getWriter().print(customerID);
 //		response.getWriter().print(request.getParameter("password"));
 		Customer customer = new CustomerValidation().verify(customerID,password);
 		HttpSession session = request.getSession();

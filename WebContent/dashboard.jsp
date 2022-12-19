@@ -19,7 +19,7 @@
 	}
 	.button{
 		background-color: #3399ff;
-	}
+	} 
 </style>
 <body>
 	<c:out value="${customer.profile}"></c:out><br>

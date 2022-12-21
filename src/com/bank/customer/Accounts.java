@@ -196,14 +196,8 @@ public class Accounts {
 	public Card getCard() {
 		return card;
 	}
-	private void getDetails() {
-    	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-    	System.out.println("Account Number   : "+accountNumber );
-    	System.out.println("Account Type     : "+accountType);
-    	System.out.println("IFSC code        : "+ifsc );
-    	System.out.println("Today's Transfer : "+transfer);
-    	System.out.println("Balance          : "+balance);
-    	System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+	public ArrayList<Transaction> getTransactions() {
+		return dao.transactions(accountNumber, balance);
 	}
 //	private void addBeneficiary(){
 //		System.out.println("Press 1 if the beneficiary's account is in the same bank");

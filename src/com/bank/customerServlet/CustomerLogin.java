@@ -26,8 +26,16 @@ public class CustomerLogin extends HttpServlet{
 //		response.getWriter().print(request.getParameter("password"));
 		Customer customer = new CustomerValidation().verify(customerID,password);
 		HttpSession session = request.getSession();
-		session.setAttribute("customer", customer);
-		response.sendRedirect("dashboard");
+		if(customer!=null) {
+		
+			session.setAttribute("customer", customer);
+			response.sendRedirect("dashboard");	
+		}
+		else {
+			request.setAttribute("errorMessage", "Invalid user or password");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
+		
 		}catch(NumberFormatException e) {
 			response.sendRedirect("home");
 		}

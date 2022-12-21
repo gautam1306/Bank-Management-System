@@ -1,0 +1,14 @@
+<context>
+<Resource
+    name="jdbc/Bank"
+    auth="Container"
+    type="javax.sql.DataSource"
+    maxActive="100"
+    maxIdle="30"
+    maxWait="10000"
+    driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://localhost:5432/Bank"
+    username="postgres"
+    password="root"
+    />
+</context>

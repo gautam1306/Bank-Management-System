@@ -1,7 +1,4 @@
 package com.bank.customer;
-
-import java.util.Scanner;
-
 public class RecurringDeposit {
 	int depositid;
 	int amount;

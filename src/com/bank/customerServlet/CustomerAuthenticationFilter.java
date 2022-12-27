@@ -8,19 +8,18 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class CustomerAuthenticationFilter
  */
-@WebFilter("/CustomerAuthenticationFilter")
 public class CustomerAuthenticationFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public CustomerAuthenticationFilter() {
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see Filter#destroy()
@@ -30,14 +29,22 @@ public class CustomerAuthenticationFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		chain.doFilter(request, response);
+		HttpServletRequest request1 = (HttpServletRequest) request;
+        HttpServletResponse response1 = (HttpServletResponse) response;
+        HttpSession session = request1.getSession(false);
+        String loginURI = request1.getContextPath() + "/home";
+//        System.out.println(loginURI);
+        boolean loggedIn = session != null && session.getAttribute("customer") != null;
+        boolean loginRequest = request1.getRequestURI().equals(loginURI);
+
+        if (loggedIn || loginRequest) {
+            chain.doFilter(request1, response1);
+        } else {
+            response1.sendRedirect(loginURI);
+        }
 	}
 
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-
 }

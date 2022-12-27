@@ -46,10 +46,32 @@
     <artifactId>tomcat-jdbc</artifactId>
     <version>10.1.1</version>
 </dependency>
-  
+<dependency>
+  <groupId>org.apache.tomcat</groupId>
+  <artifactId>tomcat</artifactId>
+  <version>9.0.70</version>
+  <type>pom</type>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
+<dependency>
+  <groupId>org.apache.tomcat</groupId>
+  <artifactId>tomcat-servlet-api</artifactId>
+  <version>9.0.70</version>
+</dependency>
+
 <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
     <version>42.5.0</version>
 </dependency></dependencies>
+<distributionManagement>
+  <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>corp1</id>
+      <name>Corporate Repository</name>
+      <url>file:///home/myfolder/.m2</url>
+      <layout>default</layout>
+  </repository>
+</distributionManagement>
+
 </project>

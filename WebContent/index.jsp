@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<%@include file="customernavbar.html" %>
+<%@include file="customernavbar.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <title>Customer Login</title>
 <html>
 <h1>Customer Login</h1>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-	<form action="customer" method="post">
+<form action="customer" method="post">
         <center>
         <table border="1" width="30%" cellpadding="3">
             <thead>

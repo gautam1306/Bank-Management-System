@@ -38,7 +38,6 @@ public class CustomerValidation {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return null;

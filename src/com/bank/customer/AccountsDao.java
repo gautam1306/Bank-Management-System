@@ -4,10 +4,8 @@ import com.db.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Formatter;
+import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import javax.naming.ldap.PagedResultsControl;
 
 public class AccountsDao {
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("sql");
@@ -26,7 +24,6 @@ public class AccountsDao {
 			}
 			return -1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		}
@@ -47,16 +44,14 @@ public class AccountsDao {
 								resultSet.getString("date_of_transfer"), resultSet.getInt("transfer_type"),
 								resultSet.getString("description"), resultSet.getInt("transfer_amount"),
 								resultSet.getString("mode_of_transaction"), balance);
-						balance += resultSet.getInt("transfer_amount")
-								* (resultSet.getInt("transfer_type") == 1 ? -1 : 1);
-						System.out.println(balance);
+						balance += ((resultSet.getInt("from_account_number")==accountNumber ? 1 : -1)*resultSet.getInt("transfer_amount"));
+//						System.out.println(balance);
 						transactions.add(transaction);
 					}
 					return transactions;
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -65,7 +60,7 @@ public class AccountsDao {
 	public int[] getBenificiary(int accountNumber, int acc) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.getBenificiary"))) {
+					.prepareStatement(resourceBundle.getString("db.getBeneficiary"))) {
 				preparedStatement.setInt(1, accountNumber);
 				preparedStatement.setInt(2, acc);
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -85,7 +80,7 @@ public class AccountsDao {
 	}
 
 	public void transferMethod(int accountNumber, int acc, int transfer, int beneficiary, String discription,
-			String type) {
+			String mode) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.getAccountInfo"))) {
@@ -107,14 +102,14 @@ public class AccountsDao {
 						.prepareStatement(resourceBundle.getString("db.transferAmount"))) {
 					preparedStatement.setInt(1, -transfer);
 					preparedStatement.setInt(2, accountNumber);
-					preparedStatement.executeUpdate();
+					int x=preparedStatement.executeUpdate();
+					System.out.println(x);
 				}
 				try (PreparedStatement preparedStatement = connection
 						.prepareStatement(resourceBundle.getString("db.updateBenificiary"))) {
 					preparedStatement.setInt(1, transfer);
 					preparedStatement.setInt(2, accountNumber);
 					preparedStatement.setInt(3, acc);
-					preparedStatement.setInt(4, transfer);
 					preparedStatement.executeUpdate();
 				}
 			}
@@ -130,7 +125,7 @@ public class AccountsDao {
 				preparedStatement.setInt(2, acc);
 				preparedStatement.setInt(3, transfer);
 				preparedStatement.setString(4, discription);
-				preparedStatement.setString(5, "imps");
+				preparedStatement.setString(5,mode);
 				preparedStatement.executeUpdate();
 			}
 			System.out.println("The transfer was successfull");
@@ -139,37 +134,42 @@ public class AccountsDao {
 		}
 	}
 
-	public int addBeneficiary(int accountNumber, int acc, int transferlimit) {
+	public int addBeneficiary(int accountNumber, int acc, int transferlimit,String nickname) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.addBeneficiary"))) {
 				preparedStatement.setInt(1, accountNumber);
 				preparedStatement.setInt(2, acc);
 				preparedStatement.setInt(3, transferlimit);
+				preparedStatement.setString(4,nickname);
+				preparedStatement.setInt(5, acc);
 				int x = preparedStatement.executeUpdate();
 				if (x > 0) {
 					System.out.println("Account Successfully added");
 					return 1;
 				}
+				else {
+					System.out.println("sorry");
+				}
 			}
 		} catch (SQLException e) {
 			String str = e.getSQLState();
+			System.out.println("????");
 //        	System.out.println(str);
 			if (str.equals("23505")) {
-//				System.out.println("The beneficiary already exists");
+				System.out.println("The beneficiary already exists");
 				return 23505;
 			}
 			if (str.equals("23503")) {
-//				System.out.println("The beneficiary account does not exist");
+				System.out.println("The beneficiary account does not exist");
 				return 23503;
 			}
-//            throw new RuntimeException(e);
 		}
 		return 0;
 	}
 
-	public ArrayList<Beneficiary> getBenificiaryList(int accountNumber) {
-		ArrayList<Beneficiary> arr = new ArrayList<>();
+	public HashMap<Integer,Beneficiary> getBenificiaryList(int accountNumber) {
+		HashMap<Integer,Beneficiary> arr = new HashMap<>();
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.getBeneficiaryDetails"))) {
@@ -177,61 +177,21 @@ public class AccountsDao {
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					while (resultSet.next()) {
 						Beneficiary bs = new Beneficiary();
-						bs.accountnumber = resultSet.getInt(1);
-						bs.firstName = resultSet.getString(2);
-						bs.lastName = resultSet.getString(3);
-						bs.ifsc = resultSet.getString(4);
-						bs.transactionlimit = resultSet.getInt(5);
-						arr.add(bs);
+						bs.setAccountnumber(resultSet.getInt("beneficiaryaccount"));
+						bs.setNickName(resultSet.getString("nickname"));
+						bs.setIfsc(resultSet.getString("branch_ifsc"));
+						bs.setTransactionlimit(resultSet.getInt("transferlimit"));
+						bs.setTransfer(resultSet.getInt("transfer"));
+						arr.put(bs.getAccountnumber(),bs);
 					}
 				}
 			}
 			return arr;
 		} catch (SQLException e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
-
-	public void beneficiaryAdditionRequest(int accountNumber, int beneficiaryaccountnumber, int transferlimit,
-			String beneficiaryifsc) {
-		int requestid;
-		if (verifyBranch(beneficiaryifsc)) {
-			try (Connection connection = Database.getConnection()) {
-				try (PreparedStatement preparedStatement = connection
-						.prepareStatement(resourceBundle.getString("db.verifyAccountRequest"))) {
-					preparedStatement.setString(1, beneficiaryifsc);
-					preparedStatement.setInt(2, beneficiaryaccountnumber);
-					preparedStatement.executeUpdate();
-				}
-
-				try (PreparedStatement preparedStatement = connection
-						.prepareStatement(resourceBundle.getString("db.getrequestId"))) {
-					preparedStatement.setInt(1, beneficiaryaccountnumber);
-					try (ResultSet resultSet = preparedStatement.executeQuery()) {
-						resultSet.next();
-						requestid = resultSet.getInt(1);
-					}
-				}
-				try (PreparedStatement preparedStatement = connection
-						.prepareStatement(resourceBundle.getString("db.addBeneficiaryRequest"))) {
-					preparedStatement.setString(1, beneficiaryifsc);
-					preparedStatement.setInt(2, beneficiaryaccountnumber);
-					preparedStatement.setInt(3, accountNumber);
-					preparedStatement.setInt(4, transferlimit);
-					preparedStatement.setInt(5, requestid);
-					preparedStatement.executeUpdate();
-					System.out.println("Your Request has been successfully placed");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("The Branch does not even exist");
-		}
-	}
-
 	public boolean verifyBranch(String ifsc) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection

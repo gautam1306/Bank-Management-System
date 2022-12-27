@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<%@include file="customernavbar.html" %>
+<%@include file="customernavbar.jsp" %>
 <meta charset="ISO-8859-1">
 
 <title>Dash Board</title>

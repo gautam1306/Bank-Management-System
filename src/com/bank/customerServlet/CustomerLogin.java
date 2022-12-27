@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import com.bank.customer.Customer;
 import com.bank.customer.CustomerValidation;
@@ -27,9 +26,10 @@ public class CustomerLogin extends HttpServlet{
 		Customer customer = new CustomerValidation().verify(customerID,password);
 		HttpSession session = request.getSession();
 		if(customer!=null) {
-		
+			Cookie cookie = new Cookie("customerId",Integer.toString(customerID));
+			response.addCookie(cookie);
 			session.setAttribute("customer", customer);
-			response.sendRedirect("dashboard");	
+			response.sendRedirect("customer-dashboard");	
 		}
 		else {
 			request.setAttribute("errorMessage", "Invalid user or password");

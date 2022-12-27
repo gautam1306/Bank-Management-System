@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	    $('div a[href="'+location.href.split("/").at(-1)+'"]').addClass('active');
+	});
+  console.log(location.href.split("/").at(-1)  );</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #3399ff;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: white;
+  color: black;
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a id="dashboard" href="dashboard">Home</a>
+  <a id="pay" href="pay">Pay</a>
+  <a id="save"href="save">Save</a>
+  <a id="loan"href="loan">Barrow</a>
+  <a id="profile"href="profile">Profile</a>
+  <%if(request.getRequestURI().equals(request.getContextPath() + "/dashboard")) 
+  	out.print("<a href=\"Logout\">Logout</a>");
+  %>
+</div>
+</body>
+</html>

@@ -9,7 +9,27 @@ public class Address {
     public int pin_code;
     public String state;
 
-    public Address(String address_house, String address_street, String address_district, String address_state, int address_pin_code) {
+    public String getHouse() {
+		return house;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public int getPin_code() {
+		return pin_code;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public Address(String address_house, String address_street, String address_district, String address_state, int address_pin_code) {
         this.house = address_house;
         this.street = address_street;
         this.district = address_district;

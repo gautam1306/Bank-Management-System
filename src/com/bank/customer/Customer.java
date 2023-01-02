@@ -1,6 +1,7 @@
 package com.bank.customer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Customer{
@@ -12,6 +13,8 @@ public class Customer{
 	private TreeMap<Integer, FixedDeposits> fixedDeposits;
 	private TreeMap<Integer, RecurringDeposit> recurringDeposit;
 	private TreeMap<Integer, Loan> loans;
+	private HashMap<Integer, Beneficiary> beneficiaryList;
+
 	public Customer(int customerId, String password,ArrayList<String> property) {
 		customerID = customerId;
 		this.password = password;
@@ -80,9 +83,12 @@ public class Customer{
 	}
 
 	public TreeMap<Integer, Loan> getLoans() {
+		getLoansDB();
 		return loans;
 	}
-
+	public void getLoansDB() {
+		loans=dao.getloanAccounts(customerID);
+	}
 	public void setLoans(TreeMap<Integer, Loan> loans) {
 		this.loans = loans;
 	}
@@ -90,4 +96,24 @@ public class Customer{
 	public void view(){
 		System.out.println(profile);
 	}
+	private void getbeneficiaryList() {
+		beneficiaryList = dao.getBenificiaryList(customerID);
+	}
+	public void addBeneficiary(int beneficiaryaccount,int transferLimit, String nickname) {
+		if(beneficiaryList==null) {
+			getBeneficiaryList();
+		}
+		if (beneficiaryaccount== customerID || beneficiaryList.containsKey(beneficiaryaccount)) {
+			System.out.println("Cann't add the same account number");
+			return;
+		}
+		dao.addBeneficiary(customerID, beneficiaryaccount, transferLimit,nickname);
+	}
+	public HashMap<Integer, Beneficiary> getBeneficiaryList() {
+		if (beneficiaryList == null) {
+			getbeneficiaryList();
+		}
+		return beneficiaryList;
+	}
+
 }

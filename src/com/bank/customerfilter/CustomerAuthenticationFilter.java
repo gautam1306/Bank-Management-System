@@ -1,4 +1,4 @@
-package com.bank.customerServlet;
+package com.bank.customerfilter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

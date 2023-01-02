@@ -4,7 +4,9 @@
 <title>Customer Login</title>
 <html>
 <h1>Customer Login</h1>
+<%session.invalidate();
 
+%>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.bank.customer.Accounts;
+import com.bank.customer.Customer;
 
 /**
  * Servlet implementation class Beneficiarytransfer
@@ -29,12 +30,15 @@ public class Beneficiarytransfer extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Accounts account = (Accounts)session.getAttribute("account");
-		int toAccountNumber = Integer.parseInt(request.getParameter("accountNumber"));
+		Customer customer = (Customer) session.getAttribute("customer");
+		Accounts account = customer.getAccounts().get(Integer.parseInt(request.getParameter("account")));
+		int toAccountNumber = (int)session.getAttribute("accountnumber");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		String description = request.getParameter("description");
 		String mode = request.getParameter("mode");
-		account.beneficiaryfundtransfer(toAccountNumber, amount, description, mode);
+		int transferLimit = customer.getBeneficiaryList().get(toAccountNumber).getTransactionlimit();
+		int transfer = customer.getBeneficiaryList().get(toAccountNumber).getTransfer();
+		account.beneficiaryfundtransfer(toAccountNumber, amount, description, mode,transferLimit,transfer);
 		
 	}
 

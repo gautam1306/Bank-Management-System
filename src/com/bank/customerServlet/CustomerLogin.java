@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.bank.customer.Customer;
 import com.bank.customer.CustomerValidation;
+import com.bank.customer.PasswordEncoder;
 
 @WebServlet("/customer")
 public class CustomerLogin extends HttpServlet{
@@ -20,7 +21,8 @@ public class CustomerLogin extends HttpServlet{
 		// TODO Auto-generated method stub
 		try {
 		int customerID = Integer.parseInt(request.getParameter("customerID"));
-		String password = request.getParameter("password");
+		String password = new PasswordEncoder().encode(request.getParameter("password"));
+		
 		response.getWriter().print(customerID);
 //		response.getWriter().print(request.getParameter("password"));
 		Customer customer = new CustomerValidation().verify(customerID,password);

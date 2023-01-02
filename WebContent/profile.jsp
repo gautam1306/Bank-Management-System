@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%@include file="customernavbar.jsp" %>
+
+
+<html>
 <style>
 table, th, td {
 	  border: 1px solid;
@@ -10,10 +14,10 @@ table, th, td {
 	  
 	}
 </style>
-<html>
 <head>
 
 <meta charset="ISO-8859-1">
+
 <title>My Profile</title>
 </head>
 <body>
@@ -24,9 +28,6 @@ table, th, td {
 <tr><th>Aadhaar Number</th><td>${customer.profile.aadhaarNumber}</td></tr>
 <tr><th>Pan </th><td>${customer.profile.panCardCode}</td></tr>
 <tr><th>Gender </th><td>${customer.profile.gender}</td></tr>
-<tr><th>Address Line 1</th> <td>${customer.profile.address.house}</td></tr>
-<tr><th>Address Line 2</th><td>${customer.profile.address.street}</td></tr>
-<tr><th>Address Line 3</th><td>${customer.profile.address.district},${customer.address.state}</td></tr>
-<tr><th>Pincode </th><td>${customer.profile.address.pin_code}</td><tr>
+<tr><th>Address</th> <td>${customer.profile.address}</td></tr>
 </table></body>
 </html>

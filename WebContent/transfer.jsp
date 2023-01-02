@@ -4,7 +4,7 @@
 <%@include file="accountsnavbar.jsp"%>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>transfer</title>
 </head>
 <body>
@@ -17,7 +17,8 @@ Decription of transfer<input type="text" name="description"><br>
   <select name="mode" id="mode">
     <option value="RTGS">RTGS</option>
     <option value="IMBS">IMBS</option>
-    <option value="NEFT">NEFT</option>   
+    <option value="NEFT">NEFT</option>  
+    <option value="UPI">UPI</option>
   </select>
 <input type="submit" value="submit"></form>
 </body>

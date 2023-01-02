@@ -49,11 +49,8 @@ response.setHeader("Pragma", "no-cache");
 <div class="topnav">
 <a id="dashboard"href="account">Accounts</a>
 <a id="transactionhistory"href="transactionhistory">Statement</a>
-<a id="transfer" href="transfer">Pay Using the Account Number</a>
-<a id="beneficiary" href="beneficiary">Pay to a Beneficiary</a>
-<a id="addbeneficiary"href="addbeneficiary">Add Beneficiary in the same bank</a>
 <a id="accountview"href="accountview">Show Account Details</a>
-<a id="dashboard"href="dashboard">Dashboard</a>	
+<a id="customer-dashboard"href="customer-dashboard">Dashboard</a>	
 </div>
 </body>
 </html>

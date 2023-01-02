@@ -22,7 +22,7 @@ public class TransferServlet extends HttpServlet {
      */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int amount = Integer.parseInt(request.getParameter("amount"));
-		int toAccountNumber = Integer.parseInt(request.getParameter("account_number"));
+		int toAccountNumber = Integer.parseInt(request.getParameter("accountnumber"));
 		HttpSession session = request.getSession();
 		Accounts account = (Accounts)session.getAttribute("account");
 		String description = request.getParameter("description");

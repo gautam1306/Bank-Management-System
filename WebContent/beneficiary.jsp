@@ -10,18 +10,10 @@
 </head>
 <body>
 
-<c:forEach var="beneficiary" items="${account.beneficiaryList}">
-<form action="beneficiarytransfer" method="post">
+<c:forEach var="beneficiary" items="${customer.beneficiaryList}">
+<form action="paybeneficiary.jsp" method="post">
 <c:out value="${beneficiary.value.nickName}"></c:out>
-Enter the Amount:<input type="number" name="amount">
 <input type="hidden" value="${beneficiary.key}" id="accountNumber" name="accountNumber">
-<input type="text" name="description" id="description">
-  <label for="mode">Choose a mode of transaction:</label>
-  <select name="mode" id="mode">
-    <option value="RTGS">RTGS</option>
-    <option value="IMBS">IMBS</option>
-    <option value="NEFT">NEFT</option>   
-  </select>
 <input type="submit" value="go">
 </form>
 </c:forEach>

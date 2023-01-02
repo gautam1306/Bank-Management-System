@@ -12,6 +12,6 @@ Enter the Account Number<input type="number" id="beneficiaryAccount" name="benef
 Enter the Transfer Limit<input type="number" id="transferLimit" name="transferLimit">
 Enter the nickname for this account<input type="text" id="nickname" name="nickname"> 
 <input type="submit" value="submit">
-</form>
+</form> 
 </body>
 </html> 

@@ -13,7 +13,6 @@ public class Accounts {
 	private AccountsDao dao = new AccountsDao();
 	private int transactionlimit;
 	private Card card;
-	private HashMap<Integer, Beneficiary> beneficiaryList;
 	public String getAccountType() {
 		return accountType;
 	}
@@ -34,9 +33,7 @@ public class Accounts {
 		this.overdraft = overdraft;
 	}
 
-	private void getbeneficiaryList() {
-		beneficiaryList = dao.getBenificiaryList(accountNumber);
-	}
+	
 
 	@Override
 	public String toString() {
@@ -81,12 +78,6 @@ public class Accounts {
 		return transactionlimit;
 	}
 
-	public HashMap<Integer, Beneficiary> getBeneficiaryList() {
-		if (beneficiaryList == null) {
-			getbeneficiaryList();
-		}
-		return beneficiaryList;
-	}
 
 	public Card getCard() {
 		return card;
@@ -96,16 +87,7 @@ public class Accounts {
 		return dao.transactions(accountNumber, balance);
 	}
 
-	public void addBeneficiary(int beneficiaryaccount,int transferLimit, String nickname) {
-		if(beneficiaryList==null) {
-			getBeneficiaryList();
-		}
-		if (beneficiaryaccount== accountNumber || beneficiaryList.containsKey(beneficiaryaccount)) {
-			System.out.println("Cann't add the same account number");
-			return;
-		}
-		dao.addBeneficiary(accountNumber, beneficiaryaccount, transferLimit,nickname);
-	}
+
 
 	public int fundtransfer(int toAccountNumber, int amount, String description, String mode) {
 		if (toAccountNumber != accountNumber) {
@@ -123,17 +105,41 @@ public class Accounts {
 			return -1;
 		}
 	}
-
-	public void beneficiaryfundtransfer(int toAccountNumber, int amount, String description, String mode) {
-		if (beneficiaryList == null) {
-			getbeneficiaryList();
-		}
-		int transferLimit = beneficiaryList.get(toAccountNumber).getTransactionlimit();
-		int transfer = beneficiaryList.get(toAccountNumber).getTransfer();
+	public void beneficiaryfundtransfer(int toAccountNumber, int amount, String description, String mode,int transferLimit,int transfer) {
 		if (transferLimit >= transfer + amount || accountType.equals("Current")) {
 			balance -= amount;
 			dao.transferMethod(accountNumber, toAccountNumber, amount, 1, description, mode);
-
 		}
+	}
+	public int loanrepayment(Loan loan,int amount) {
+		if(amount>balance) {
+			return 1;
+		}
+		else if(loan==null) {
+			return -1;
+		}
+		
+		else {
+			float interestamount;
+			int payableamount;
+			if((float)amount>loan.interestPayable) {
+				interestamount =0;
+			}
+			else {
+				interestamount = loan.interestPayable-amount;
+			}
+			if(loan.payableAmount<(amount-(int)loan.interestPayable)) {
+				amount = loan.payableAmount +(int)loan.interestPayable;
+				payableamount=0;
+			}
+			else {
+				payableamount =(loan.interestPayable-amount<0?loan.payableAmount-amount+(int)loan.interestPayable:loan.payableAmount);
+			}
+			loan.interestPayable = interestamount;
+			loan.payableAmount = payableamount;
+			dao.loanPayment(accountNumber, loan, amount);
+			return 0;
+		}
+		
 	}
 }

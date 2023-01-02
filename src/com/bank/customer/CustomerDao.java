@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
@@ -259,4 +260,83 @@ public class CustomerDao {
 			e.printStackTrace();
 		}
 	}
+	public HashMap<Integer,Beneficiary> getBenificiaryList(int customerID) {
+		HashMap<Integer,Beneficiary> arr = new HashMap<>();
+		try (Connection connection = Database.getConnection()) {
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.getBeneficiaryDetails"))) {
+				preparedStatement.setInt(1, customerID);
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					while (resultSet.next()) {
+						Beneficiary bs = new Beneficiary();
+						bs.setAccountnumber(resultSet.getInt("beneficiaryaccount"));
+						bs.setNickName(resultSet.getString("nickname"));
+						bs.setIfsc(resultSet.getString("branch_ifsc"));
+						bs.setTransactionlimit(resultSet.getInt("transferlimit"));
+						bs.setTransfer(resultSet.getInt("transfer"));
+						arr.put(bs.getAccountnumber(),bs);
+					}
+				}
+			}
+			return arr;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int addBeneficiary(int customerID, int acc, int transferlimit,String nickname) {
+		try (Connection connection = Database.getConnection()) {
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.addBeneficiary"))) {
+				preparedStatement.setInt(1, customerID);
+				preparedStatement.setInt(2, acc);
+				preparedStatement.setInt(3, transferlimit);
+				preparedStatement.setString(4,nickname);
+				preparedStatement.setInt(5, acc);
+				int x = preparedStatement.executeUpdate();
+				if (x > 0) {
+					System.out.println("Account Successfully added");
+					return 1;
+				}
+				else {
+					System.out.println("sorry");
+				}
+			}
+		} catch (SQLException e) {
+			String str = e.getSQLState();
+			System.out.println("????");
+//        	System.out.println(str);
+			if (str.equals("23505")) {
+				System.out.println("The beneficiary already exists");
+				return 23505;
+			}
+			if (str.equals("23503")) {
+				System.out.println("The beneficiary account does not exist");
+				return 23503;
+			}
+		}
+		return 0;
+	}
+
+	public TreeMap<Integer, Loan> getloanAccounts(int customerID) {
+		TreeMap<Integer, Loan> loans =new TreeMap<Integer, Loan>();
+		try(Connection connection = Database.getConnection()){
+			try(PreparedStatement preparedStatement = connection.prepareStatement(resourceBundle.getString("db.getLoanAccounts"))){
+				preparedStatement.setInt(1, customerID);
+				try(ResultSet resultSet = preparedStatement.executeQuery()){
+					while(resultSet.next()) {
+						Loan loan=new Loan(resultSet.getInt("loan_id"),resultSet.getFloat("interest_amount"),resultSet.getFloat("loan_interest_rate"),resultSet.getString("lastdateofpayment"),resultSet.getInt("payable_amount"),resultSet.getInt("loan_amount"), true,resultSet.getString("loan_type"),customerID);
+						loans.put(loan.loanID,loan);
+					}
+				}
+			}
+			return loans;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

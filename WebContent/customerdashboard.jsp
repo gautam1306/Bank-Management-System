@@ -9,6 +9,8 @@
 
 <title>Dash Board</title>
 </head>
+<%if(session.getAttribute("account")!=null){
+	session.removeAttribute("account");}%>
 <style>
 	table, th, td {
 	  border: 1px solid;
@@ -38,6 +40,7 @@
 	</td>
 	<td>${account.value.balance}</td>
 	<td>
+	
 	<form action="account" method="post">
 	<input type="hidden" id="account" name="account" value="${account.key}">
 	<input type="Submit" class="button" value= "GO">

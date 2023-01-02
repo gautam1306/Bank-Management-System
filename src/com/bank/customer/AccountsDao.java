@@ -44,7 +44,8 @@ public class AccountsDao {
 								resultSet.getString("date_of_transfer"), resultSet.getInt("transfer_type"),
 								resultSet.getString("description"), resultSet.getInt("transfer_amount"),
 								resultSet.getString("mode_of_transaction"), balance);
-						balance += ((resultSet.getInt("from_account_number")==accountNumber ? 1 : -1)*resultSet.getInt("transfer_amount"));
+						balance += ((resultSet.getInt("from_account_number") == accountNumber ? 1 : -1)
+								* resultSet.getInt("transfer_amount"));
 //						System.out.println(balance);
 						transactions.add(transaction);
 					}
@@ -54,28 +55,6 @@ public class AccountsDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		}
-	}
-
-	public int[] getBenificiary(int accountNumber, int acc) {
-		try (Connection connection = Database.getConnection()) {
-			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.getBeneficiary"))) {
-				preparedStatement.setInt(1, accountNumber);
-				preparedStatement.setInt(2, acc);
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (resultSet.next()) {
-						int[] arr = new int[3];
-						arr[0] = resultSet.getInt(1);
-						arr[1] = resultSet.getInt(2);
-						arr[2] = resultSet.getInt(3);
-						return arr;
-					}
-				}
-				return null;
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -102,7 +81,7 @@ public class AccountsDao {
 						.prepareStatement(resourceBundle.getString("db.transferAmount"))) {
 					preparedStatement.setInt(1, -transfer);
 					preparedStatement.setInt(2, accountNumber);
-					int x=preparedStatement.executeUpdate();
+					int x = preparedStatement.executeUpdate();
 					System.out.println(x);
 				}
 				try (PreparedStatement preparedStatement = connection
@@ -125,8 +104,10 @@ public class AccountsDao {
 				preparedStatement.setInt(2, acc);
 				preparedStatement.setInt(3, transfer);
 				preparedStatement.setString(4, discription);
-				preparedStatement.setString(5,mode);
-				preparedStatement.executeUpdate();
+				preparedStatement.setString(5, mode);
+				if (transfer > 0) {
+					preparedStatement.executeUpdate();
+				}
 			}
 			System.out.println("The transfer was successfull");
 		} catch (SQLException e) {
@@ -134,64 +115,6 @@ public class AccountsDao {
 		}
 	}
 
-	public int addBeneficiary(int accountNumber, int acc, int transferlimit,String nickname) {
-		try (Connection connection = Database.getConnection()) {
-			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.addBeneficiary"))) {
-				preparedStatement.setInt(1, accountNumber);
-				preparedStatement.setInt(2, acc);
-				preparedStatement.setInt(3, transferlimit);
-				preparedStatement.setString(4,nickname);
-				preparedStatement.setInt(5, acc);
-				int x = preparedStatement.executeUpdate();
-				if (x > 0) {
-					System.out.println("Account Successfully added");
-					return 1;
-				}
-				else {
-					System.out.println("sorry");
-				}
-			}
-		} catch (SQLException e) {
-			String str = e.getSQLState();
-			System.out.println("????");
-//        	System.out.println(str);
-			if (str.equals("23505")) {
-				System.out.println("The beneficiary already exists");
-				return 23505;
-			}
-			if (str.equals("23503")) {
-				System.out.println("The beneficiary account does not exist");
-				return 23503;
-			}
-		}
-		return 0;
-	}
-
-	public HashMap<Integer,Beneficiary> getBenificiaryList(int accountNumber) {
-		HashMap<Integer,Beneficiary> arr = new HashMap<>();
-		try (Connection connection = Database.getConnection()) {
-			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.getBeneficiaryDetails"))) {
-				preparedStatement.setInt(1, accountNumber);
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					while (resultSet.next()) {
-						Beneficiary bs = new Beneficiary();
-						bs.setAccountnumber(resultSet.getInt("beneficiaryaccount"));
-						bs.setNickName(resultSet.getString("nickname"));
-						bs.setIfsc(resultSet.getString("branch_ifsc"));
-						bs.setTransactionlimit(resultSet.getInt("transferlimit"));
-						bs.setTransfer(resultSet.getInt("transfer"));
-						arr.put(bs.getAccountnumber(),bs);
-					}
-				}
-			}
-			return arr;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	public boolean verifyBranch(String ifsc) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
@@ -237,45 +160,20 @@ public class AccountsDao {
 		return null;
 	}
 
-	public int loanPayment(int accountNumber, int loanID, int amount) {
-		int interestAmount, payableAmount, status;
+	public void loanPayment(int accountNumber, Loan loan, int amount) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.getLoan"))) {
-				preparedStatement.setInt(1, loanID);
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					resultSet.next();
-					interestAmount = resultSet.getInt("interest_amount");
-					payableAmount = resultSet.getInt("payable_amount");
-					status = -1;
-					if (interestAmount + payableAmount <= amount) {
-						amount = interestAmount + payableAmount;
-						interestAmount = 0;
-						payableAmount = 0;
-						status = 2;
-					} else if (interestAmount < amount) {
-						payableAmount -= amount - interestAmount;
-						interestAmount = 0;
-						status = 1;
-					} else {
-						interestAmount -= amount;
-						status = 0;
-					}
-				}
-			}
-			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.updateLoan"))) {
-				preparedStatement.setInt(1, interestAmount);
-				preparedStatement.setInt(2, payableAmount);
-				preparedStatement.setInt(3, loanID);
+				preparedStatement.setFloat(1, loan.interestPayable);
+				preparedStatement.setInt(2, loan.payableAmount);
+				preparedStatement.setInt(3, loan.loanID);
 				preparedStatement.executeUpdate();
 			}
-			transferMethod(accountNumber, 1, amount, 0, "Loan Part Payment", "imps");
-			return status;
+			transferMethod(accountNumber, 1, amount, 0, "Loan Part Payment towards the loan ID:" + loan.loanID, "imps");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return -1;
 		}
 	}
 }

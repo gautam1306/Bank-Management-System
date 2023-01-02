@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bank.customer.Accounts;
+import com.bank.customer.Customer;
 
 
 /**
@@ -39,12 +40,12 @@ public class AddBeneficiary extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session =request.getSession();
-		Accounts accounts = (Accounts)session.getAttribute("account");
+		Customer customer = (Customer)session.getAttribute("customer");
 		int beneficiaryaccount = Integer.parseInt(request.getParameter("beneficiaryAccount"));
 		System.out.println(beneficiaryaccount);
 		String nickname = request.getParameter("nickname");
 		int transferLimit = Integer.parseInt(request.getParameter("transferLimit"));
-		accounts.addBeneficiary(beneficiaryaccount, transferLimit,nickname);
+		customer.addBeneficiary(beneficiaryaccount, transferLimit,nickname);
 		
 	}
 }

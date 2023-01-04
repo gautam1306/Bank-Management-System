@@ -47,14 +47,14 @@ body {
 
 	<div class="topnav">
 		<a id="dashboard" href="customer-dashboard">Home</a> <a id="pay" href="pay">Pay</a>
-		<a id="save" href="save">Save</a> <a id="loan" href="loan">Barrow</a>
+		<a id="invest" href="invest">Save</a> <a id="loan" href="loan">Barrow</a>
 		<a id="profile" href="profile">Profile</a>
 		<a id="transfer" href="transfer">Pay Using the Account Number</a> 
 		<a id="beneficiary" href="beneficiary">Pay to a Beneficiary</a> 
 		<a id="addbeneficiary" href="add-beneficiary">Add Beneficiary in the same bank</a>
 		<%
 			if (request.getRequestURI().equals(request.getContextPath() + "/customer-dashboard"))
-				out.print("<a href=\"Logout\">Logout</a>");
+				out.print("<a href=\"logout\">Logout</a>");
 		%>
 	</div>
 </body>

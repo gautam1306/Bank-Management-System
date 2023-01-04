@@ -36,9 +36,26 @@ public class Beneficiarytransfer extends HttpServlet {
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		String description = request.getParameter("description");
 		String mode = request.getParameter("mode");
-		int transferLimit = customer.getBeneficiaryList().get(toAccountNumber).getTransactionlimit();
+		System.out.println(customer);
+		int transferLimit = customer.getBeneficiaryList().get(toAccountNumber)!=null?customer.getBeneficiaryList().get(toAccountNumber).getTransactionlimit():-1;
+		if(transferLimit!=-1) {
 		int transfer = customer.getBeneficiaryList().get(toAccountNumber).getTransfer();
-		account.beneficiaryfundtransfer(toAccountNumber, amount, description, mode,transferLimit,transfer);
+		int status = account.beneficiaryfundtransfer(toAccountNumber, amount, description, mode,transferLimit,transfer);
+		if(status==1) {
+			request.setAttribute("status","insufficient funds");
+		}
+		if(status==0) {
+			request.setAttribute("status","transfer was successfull");
+			customer.getBeneficiaryList().get(toAccountNumber).setTransfer(transfer+amount);
+			account.setBalance(account.getBalance()-amount);
+		}
+		if(status==-1) {
+			request.setAttribute("status","You are trying to access the same account number");
+		}}
+		else {
+			request.setAttribute("status", "This account is not added to the beneficiary");
+		}
+		request.getRequestDispatcher("loan").forward(request, response);
 		
 	}
 

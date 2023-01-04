@@ -4,9 +4,11 @@
 <title>Customer Login</title>
 <html>
 <h1>Customer Login</h1>
-<%session.invalidate();
-
-%>
+<%response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+response.setHeader("Pragma", "no-cache");
+  response.setDateHeader ("Expires", 0);
+	%>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>

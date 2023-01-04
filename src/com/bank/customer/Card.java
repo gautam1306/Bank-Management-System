@@ -23,4 +23,22 @@ public class Card {
 		String card = "Card Number : "+cardnumber+"\nCard Company : "+cardcompany+"\nTransaction Limit : "+transactionlimit+"\nExpiry Date : "+expirydate;
 		return card;
 	}
+	public int getCardid() {
+		return cardid;
+	}
+	public long getCardnumber() {
+		return cardnumber;
+	}
+	public String getExpirydate() {
+		return expirydate;
+	}
+	public int getTransactionlimit() {
+		return transactionlimit;
+	}
+	public String getCardcompany() {
+		return cardcompany;
+	}
+	public String getStatus() {
+		return status;
+	}
 }

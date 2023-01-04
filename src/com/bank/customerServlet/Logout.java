@@ -24,7 +24,10 @@ public class Logout extends HttpServlet {
 		session.removeAttribute("customer");
 		session.invalidate();
 		
-		response.sendRedirect("home");
+		response.sendRedirect("");
 	}
-
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doPost(req, resp);
+	}
 }

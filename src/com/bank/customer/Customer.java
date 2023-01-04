@@ -99,15 +99,15 @@ public class Customer{
 	private void getbeneficiaryList() {
 		beneficiaryList = dao.getBenificiaryList(customerID);
 	}
-	public void addBeneficiary(int beneficiaryaccount,int transferLimit, String nickname) {
+	public int addBeneficiary(int beneficiaryaccount,int transferLimit, String nickname) {
 		if(beneficiaryList==null) {
 			getBeneficiaryList();
 		}
 		if (beneficiaryaccount== customerID || beneficiaryList.containsKey(beneficiaryaccount)) {
 			System.out.println("Cann't add the same account number");
-			return;
+			return -1;
 		}
-		dao.addBeneficiary(customerID, beneficiaryaccount, transferLimit,nickname);
+		return dao.addBeneficiary(customerID, beneficiaryaccount, transferLimit,nickname);
 	}
 	public HashMap<Integer, Beneficiary> getBeneficiaryList() {
 		if (beneficiaryList == null) {

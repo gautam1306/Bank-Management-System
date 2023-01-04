@@ -12,7 +12,7 @@
 	<display-name>BankApplication</display-name>
 	<servlet>
 		<servlet-name>CustomerloginPage</servlet-name>
-		<jsp-file>/index.jsp</jsp-file>
+		<jsp-file>/customer/index.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CustomerloginPage</servlet-name>
@@ -20,11 +20,11 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>CustomerDashBoard</servlet-name>
-		<jsp-file>/customerdashboard.jsp</jsp-file>
+		<jsp-file>/customer/customerdashboard.jsp</jsp-file>
 	</servlet>
 	<servlet>
 		<servlet-name>account</servlet-name>
-		<jsp-file>/Accounts.jsp</jsp-file>
+		<jsp-file>/customer/Accounts.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>account</servlet-name>
@@ -36,7 +36,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>transactionstatement</servlet-name>
-		<jsp-file>/transactionstatement.jsp</jsp-file>
+		<jsp-file>/customer/transactionstatement.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>transactionstatement</servlet-name>
@@ -44,7 +44,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>transfer</servlet-name>
-		<jsp-file>/transfer.jsp</jsp-file>
+		<jsp-file>/customer/transfer.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>transfer</servlet-name>
@@ -52,7 +52,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>beneficiary</servlet-name>
-		<jsp-file>/beneficiary.jsp</jsp-file>
+		<jsp-file>/customer/beneficiary.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>beneficiary</servlet-name>
@@ -60,7 +60,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>addbeneficiary</servlet-name>
-		<jsp-file>/addbeneficiary.jsp</jsp-file>
+		<jsp-file>/customer/addbeneficiary.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>addbeneficiary</servlet-name>
@@ -68,7 +68,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>profile</servlet-name>
-		<jsp-file>/profile.jsp</jsp-file>
+		<jsp-file>/customer/profile.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>profile</servlet-name>
@@ -76,7 +76,7 @@
 	</servlet-mapping>	
 	<servlet>
 		<servlet-name>loan</servlet-name>
-		<jsp-file>/loan.jsp</jsp-file>
+		<jsp-file>/customer/loan.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>loan</servlet-name>
@@ -89,6 +89,22 @@
 	<servlet-mapping>
 	<servlet-name>repayment</servlet-name>
 	<url-pattern>/repayment</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	<servlet-name>accountview</servlet-name>
+	<jsp-file>/customer/accountview.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>accountview</servlet-name>
+	<url-pattern>/accountview</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	<servlet-name>invest</servlet-name>
+	<jsp-file>/customer/invest.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>invest</servlet-name>
+	<url-pattern>/invest</url-pattern>
 	</servlet-mapping>
 	<filter>
 		<filter-name>CustomerAuthentication</filter-name>
@@ -106,9 +122,14 @@
 	<filter-mapping>
 		<filter-name>CustomerAuthentication</filter-name>
 		<url-pattern>/add-beneficiary</url-pattern>
+		<url-pattern>/transfer</url-pattern>
+		<url-pattern>/profile</url-pattern>
+		<url-pattern>/transaction</url-pattern>
+		<url-pattern>/repayment</url-pattern>
 		<url-pattern>/beneficiary</url-pattern>
 		<url-pattern>/customer-dashboard</url-pattern>
 		<url-pattern>/logout</url-pattern>
+		<url-pattern>/loan</url-pattern>
 	</filter-mapping>
 	<resource-ref>
 		<description>datasource</description>

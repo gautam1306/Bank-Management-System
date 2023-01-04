@@ -32,9 +32,6 @@ public class Accounts {
 		this.transactionlimit = transactionlimit;
 		this.overdraft = overdraft;
 	}
-
-	
-
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -49,7 +46,9 @@ public class Accounts {
 				"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		return str;
 	}
-
+	private void setCard() {
+		card = new Card(dao.getCard(accountNumber));
+	}
 	public int getOverdraft() {
 		return overdraft;
 	}
@@ -80,6 +79,9 @@ public class Accounts {
 
 
 	public Card getCard() {
+		if(card==null) {
+			setCard();
+		}
 		return card;
 	}
 
@@ -105,10 +107,24 @@ public class Accounts {
 			return -1;
 		}
 	}
-	public void beneficiaryfundtransfer(int toAccountNumber, int amount, String description, String mode,int transferLimit,int transfer) {
-		if (transferLimit >= transfer + amount || accountType.equals("Current")) {
-			balance -= amount;
-			dao.transferMethod(accountNumber, toAccountNumber, amount, 1, description, mode);
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
+	public int beneficiaryfundtransfer(int toAccountNumber, int amount, String description, String mode,int transferLimit,int transfer) {
+		if (toAccountNumber != accountNumber) {
+			if (balance + overdraft < amount) {
+//				System.out.println("Insufficient balance");
+				return 0;
+			} else if (amount + transfer <= transactionlimit || accountType.equals("Current")) {
+				dao.transferMethod(accountNumber, toAccountNumber, amount, 1, description, mode);
+				return 1;
+			} else {
+//				System.out.println("this transaction exceeds Daily Transfer limit");
+				return -2;
+			}
+		} else {
+			return -1;
 		}
 	}
 	public int loanrepayment(Loan loan,int amount) {

@@ -45,7 +45,7 @@ public class AddBeneficiary extends HttpServlet {
 		System.out.println(beneficiaryaccount);
 		String nickname = request.getParameter("nickname");
 		int transferLimit = Integer.parseInt(request.getParameter("transferLimit"));
-		customer.addBeneficiary(beneficiaryaccount, transferLimit,nickname);
+		int status = customer.addBeneficiary(beneficiaryaccount, transferLimit,nickname);
 		
 	}
 }

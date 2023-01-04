@@ -1,4 +1,5 @@
 package com.bank.customer;
+
 public class RecurringDeposit {
 	int depositid;
 	int amount;
@@ -7,8 +8,47 @@ public class RecurringDeposit {
 	String startDate;
 	int accountnumber;
 	float intrestrate;
-	float intrestamount; 
+	float intrestamount;
 	int customerID;
+	public int getDepositid() {
+		return depositid;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public int getDepositamount() {
+		return depositamount;
+	}
+
+	public String getMaturityDate() {
+		return maturityDate;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public int getAccountnumber() {
+		return accountnumber;
+	}
+
+	public float getIntrestrate() {
+		return intrestrate;
+	}
+
+	public float getIntrestamount() {
+		return intrestamount;
+	}
+
+	public int getCustomerID() {
+		return customerID;
+	}
+
+	public RecurringDepositDao getDao() {
+		return dao;
+	}
 	protected RecurringDeposit(int depositid, int amount, int depositamount, String maturityDate, String startDate,
 			int accountnumber, float intrestrate, float intrestamount, int customerID) {
 		super();
@@ -22,6 +62,7 @@ public class RecurringDeposit {
 		this.intrestamount = intrestamount;
 		this.customerID = customerID;
 	}
+
 	private RecurringDepositDao dao = new RecurringDepositDao();
 //	public void functions(String password) {
 //		Scanner sc = new Scanner(System.in);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<title>Customer Login</title>
+<title>Employee Login</title>
 <html>
 <h1>Customer Login</h1>
 <%response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -12,7 +12,7 @@ response.setHeader("Pragma", "no-cache");
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<form action="customer" method="post">
+<form action="employee" method="post">
         <table border="1" width="30%" cellpadding="3">
             <thead>
                 <tr>
@@ -21,8 +21,8 @@ response.setHeader("Pragma", "no-cache");
             </thead>
             <tbody>
                 <tr>
-                    <td>Customer ID</td>
-                    <td><input type="text" name="customerID" id="customerID" /></td>
+                    <td>Employee ID</td>
+                    <td><input type="text" name="employeeId" id="employeeId" /></td>
                 </tr>
                 <tr>
                     <td>Password</td>

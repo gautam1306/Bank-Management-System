@@ -1,3 +1,4 @@
+<%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -24,8 +25,11 @@
 	} 
 </style>
 <body>
+	<%=session.getAttribute("status")==null?"":session.getAttribute("status") %>
+	<%if((String)session.getAttribute("status")==null)session.removeAttribute("status");%>
+<%-- 
 	<c:out value="${customer.profile}"></c:out><br>
-	<table style="width:50%">
+ --%><table style="width:50%">
 	<tr>
 	<th>Account Number</th>
 	<th>Account Type</th>

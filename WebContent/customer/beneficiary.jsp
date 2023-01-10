@@ -11,7 +11,7 @@
 <body>
 
 <c:forEach var="beneficiary" items="${customer.beneficiaryList}">
-<form action="paybeneficiary.jsp" method="post">
+<form action="paybeneficiary" method="post">
 <c:out value="${beneficiary.value.nickName}"></c:out>
 <input type="hidden" value="${beneficiary.key}" id="accountNumber" name="accountNumber">
 <input type="submit" value="go">

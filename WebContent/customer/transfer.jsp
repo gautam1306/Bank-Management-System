@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <%@include file="accountsnavbar.jsp"%>
 <html>
@@ -9,9 +10,16 @@
 </head>
 <body>
 <form action="transferServlet" method="post">
+Select Account
+<select name="account" id="account">
+<c:forEach var="account" items="${customer.accounts}">
+	<option value="${account.value.accountNumber}">"${account.key}"</option>
+</c:forEach>
+</select><br>
+Enter the account number:<input type="number" id="toaccount" name="toaccount"><br>
+Reenter the account number:<input type="number" id="toaccountverify"><br>
 Enter the amount to be transfered:<input type="number" id="amount" name="amount" ><br>
-Enter the account number:<input type="number" id="account_number" name="account_number">
-<br>
+
 Decription of transfer<input type="text" name="description"><br>
   <label for="mode">Choose a mode of transaction:</label>
   <select name="mode" id="mode">

@@ -142,88 +142,64 @@ public class CustomerDao {
 		}
 	}
 
-	public void addRecurringDeposit(int customerID, int accountnumber, int period, int amount) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		try {
-			connection = Database.getConnection();
-			preparedStatement = connection.prepareStatement(resourceBundle.getString("db.addRecurringDeposit"));
-			preparedStatement.setInt(1, accountnumber);
-			preparedStatement.setInt(2, period);
-			preparedStatement.setInt(3, period);
-			preparedStatement.setInt(4, period);
-			preparedStatement.setInt(5, amount);
-			preparedStatement.executeUpdate();
-			System.out.println("Successfully Created a recurring deposit");
+	public int addRecurringDeposit(int customerID, int accountnumber, int period, int amount) {
+		try (Connection connection = Database.getConnection()) {
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.addRecurringDeposit"))) {
+				preparedStatement.setInt(1, accountnumber);
+				preparedStatement.setInt(2, period);
+				preparedStatement.setInt(3, period);
+				preparedStatement.setInt(4, period);
+				preparedStatement.setInt(5, amount);
+				int status = preparedStatement.executeUpdate();
+				return status;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return 0;
 		}
 	}
 
-	public boolean addFixedDeposit(int customerID, int accountnumber, int period, int amount) {
-		int x;
-		int accountbalance;
+	public int addFixedDeposit(int customerID, int accountnumber, int period, int amount) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.transferamount"))) {
 				preparedStatement.setInt(1, -amount);
 				preparedStatement.setInt(2, accountnumber);
 				preparedStatement.setInt(3, amount);
-				x = preparedStatement.executeUpdate();
+				preparedStatement.executeUpdate();
 			}
-			if (x >= 1) {
-				try (PreparedStatement preparedStatement = connection
-						.prepareStatement(resourceBundle.getString("db.getBalance"))) {
-					preparedStatement.setInt(1, accountnumber);
-					try (ResultSet resultSet = preparedStatement.executeQuery()) {
-						resultSet.next();
-						accountbalance = resultSet.getInt("balance");
-					}
-				}
-				try (PreparedStatement preparedStatement = connection
-						.prepareStatement(resourceBundle.getString("db.getBalance"))) {
-					preparedStatement.setInt(1, accountnumber);
-					try (ResultSet resultSet = preparedStatement.executeQuery()) {
-						resultSet.next();
-					}
-				}
-				if (accountbalance > amount) {
-					try (PreparedStatement preparedStatement = connection
-							.prepareStatement(resourceBundle.getString("db.addFixedDeposit"))) {
-						preparedStatement.setInt(1, accountnumber);
-						preparedStatement.setInt(2, period);
-						preparedStatement.setInt(3, period);
-						preparedStatement.setInt(4, period);
-						preparedStatement.setInt(5, amount);
-						preparedStatement.executeUpdate();
-					}
-					try (PreparedStatement preparedStatement = connection
-							.prepareStatement(resourceBundle.getString("db.transferamount"))) {
-						preparedStatement.setInt(1, amount);
-						preparedStatement.setInt(2, 1);
-						preparedStatement.setInt(3, -amount);
-						preparedStatement.executeUpdate();
-					}
-					try (PreparedStatement preparedStatement = connection
-							.prepareStatement(resourceBundle.getString("db.insertTransfer"))) {
-						preparedStatement.setInt(1, accountnumber);
-						preparedStatement.setInt(2, 1);
-						preparedStatement.setInt(3, amount);
-						preparedStatement.setString(5, "imps");
-						preparedStatement.setString(4, "For fixed deposit");
-						preparedStatement.executeUpdate();
-					}
-
-				}
-				return true;
-			} else {
-				return false;
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.addFixedDeposit"))) {
+				preparedStatement.setInt(1, accountnumber);
+				preparedStatement.setInt(2, period);
+				preparedStatement.setInt(3, period);
+				preparedStatement.setInt(4, period);
+				preparedStatement.setInt(5, amount);
+				preparedStatement.executeUpdate();
 			}
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.transferamount"))) {
+				preparedStatement.setInt(1, amount);
+				preparedStatement.setInt(2, 1);
+				preparedStatement.setInt(3, -amount);
+				preparedStatement.executeUpdate();
+			}
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.insertTransfer"))) {
+				preparedStatement.setInt(1, accountnumber);
+				preparedStatement.setInt(2, 1);
+				preparedStatement.setInt(3, amount);
+				preparedStatement.setString(5, "imps");
+				preparedStatement.setString(4, "For fixed deposit");
+				preparedStatement.executeUpdate();
+			}
+			return 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
+			return -3;
 		}
 	}
 
@@ -260,8 +236,9 @@ public class CustomerDao {
 			e.printStackTrace();
 		}
 	}
-	public HashMap<Integer,Beneficiary> getBenificiaryList(int customerID) {
-		HashMap<Integer,Beneficiary> arr = new HashMap<>();
+
+	public HashMap<Integer, Beneficiary> getBenificiaryList(int customerID) {
+		HashMap<Integer, Beneficiary> arr = new HashMap<>();
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.getBeneficiaryDetails"))) {
@@ -274,7 +251,7 @@ public class CustomerDao {
 						bs.setIfsc(resultSet.getString("branch_ifsc"));
 						bs.setTransactionlimit(resultSet.getInt("transferlimit"));
 						bs.setTransfer(resultSet.getInt("transfer"));
-						arr.put(bs.getAccountnumber(),bs);
+						arr.put(bs.getAccountnumber(), bs);
 					}
 				}
 			}
@@ -285,21 +262,20 @@ public class CustomerDao {
 		return null;
 	}
 
-	public int addBeneficiary(int customerID, int acc, int transferlimit,String nickname) {
+	public int addBeneficiary(int customerID, int acc, int transferlimit, String nickname) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
 					.prepareStatement(resourceBundle.getString("db.addBeneficiary"))) {
 				preparedStatement.setInt(1, customerID);
 				preparedStatement.setInt(2, acc);
 				preparedStatement.setInt(3, transferlimit);
-				preparedStatement.setString(4,nickname);
+				preparedStatement.setString(4, nickname);
 				preparedStatement.setInt(5, acc);
 				int x = preparedStatement.executeUpdate();
 				if (x > 0) {
 					System.out.println("Account Successfully added");
 					return 1;
-				}
-				else {
+				} else {
 					System.out.println("sorry");
 				}
 			}
@@ -320,20 +296,23 @@ public class CustomerDao {
 	}
 
 	public TreeMap<Integer, Loan> getloanAccounts(int customerID) {
-		TreeMap<Integer, Loan> loans =new TreeMap<Integer, Loan>();
-		try(Connection connection = Database.getConnection()){
-			try(PreparedStatement preparedStatement = connection.prepareStatement(resourceBundle.getString("db.getLoanAccounts"))){
+		TreeMap<Integer, Loan> loans = new TreeMap<Integer, Loan>();
+		try (Connection connection = Database.getConnection()) {
+			try (PreparedStatement preparedStatement = connection
+					.prepareStatement(resourceBundle.getString("db.getLoanAccounts"))) {
 				preparedStatement.setInt(1, customerID);
-				try(ResultSet resultSet = preparedStatement.executeQuery()){
-					while(resultSet.next()) {
-						Loan loan=new Loan(resultSet.getInt("loan_id"),resultSet.getFloat("interest_amount"),resultSet.getFloat("loan_interest_rate"),resultSet.getString("lastdateofpayment"),resultSet.getInt("payable_amount"),resultSet.getInt("loan_amount"), true,resultSet.getString("loan_type"),customerID);
-						loans.put(loan.loanID,loan);
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					while (resultSet.next()) {
+						Loan loan = new Loan(resultSet.getInt("loan_id"), resultSet.getFloat("interest_amount"),
+								resultSet.getFloat("loan_interest_rate"), resultSet.getString("lastdateofpayment"),
+								resultSet.getInt("payable_amount"), resultSet.getInt("loan_amount"), true,
+								resultSet.getString("loan_type"), customerID);
+						loans.put(loan.loanID, loan);
 					}
 				}
 			}
 			return loans;
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;

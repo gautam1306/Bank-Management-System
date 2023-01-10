@@ -28,7 +28,8 @@
 <tr><th>Account Number</th><td>${account.accountNumber}</td></tr>
 <tr><th>Account Type</th><td>${account.accountType}</td></tr>
 <c:if test="${account.card!=null}"> <tr><th>Card</th><td>${account.card.cardnumber}</td></tr></c:if>
-<tr><th>Spending Limit</th><td>${account.transactionlimit}</td></tr>
+
+<c:if test="${account.accountType.equals('Savings')}"><tr><th>Spending Limit</th><td>${account.transactionlimit}</td></tr></c:if>
 </table>
 </body>
 </html>

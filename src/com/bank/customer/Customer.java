@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public class Customer{
+
+public class Customer {
 	int customerID;
 	String password;
 	private Profile profile;
@@ -15,13 +16,15 @@ public class Customer{
 	private TreeMap<Integer, Loan> loans;
 	private HashMap<Integer, Beneficiary> beneficiaryList;
 
-	public Customer(int customerId, String password,ArrayList<String> property) {
+	public Customer(int customerId, String password, ArrayList<String> property) {
 		customerID = customerId;
 		this.password = password;
-		if(property!=null){
-			profile = new Profile(property.get(0),property.get(1),property.get(2),  property.get(3),  property.get(4),  property.get(5),  property.get(6),  property.get(7),  property.get(8),  property.get(9),Integer.parseInt(property.get(10)));
+		if (property != null) {
+			profile = new Profile(property.get(0), property.get(1), property.get(2), property.get(3), property.get(4),
+					property.get(5), property.get(6), property.get(7), property.get(8), property.get(9),
+					Integer.parseInt(property.get(10)));
 			accounts = dao.getAccounts(customerId);
-			recurringDeposit= dao.getRecurringDeposit(customerId); 
+			recurringDeposit = dao.getRecurringDeposit(customerId);
 			fixedDeposits = dao.getFixedDeposits(customerId);
 		}
 	}
@@ -86,29 +89,34 @@ public class Customer{
 		getLoansDB();
 		return loans;
 	}
+
 	public void getLoansDB() {
-		loans=dao.getloanAccounts(customerID);
+		loans = dao.getloanAccounts(customerID);
 	}
+
 	public void setLoans(TreeMap<Integer, Loan> loans) {
 		this.loans = loans;
 	}
 
-	public void view(){
+	public void view() {
 		System.out.println(profile);
 	}
+
 	private void getbeneficiaryList() {
 		beneficiaryList = dao.getBenificiaryList(customerID);
 	}
-	public int addBeneficiary(int beneficiaryaccount,int transferLimit, String nickname) {
-		if(beneficiaryList==null) {
+
+	public int addBeneficiary(int beneficiaryaccount, int transferLimit, String nickname) {
+		if (beneficiaryList == null) {
 			getBeneficiaryList();
 		}
-		if (beneficiaryaccount== customerID || beneficiaryList.containsKey(beneficiaryaccount)) {
+		if (beneficiaryaccount == customerID || beneficiaryList.containsKey(beneficiaryaccount)) {
 			System.out.println("Cann't add the same account number");
 			return -1;
 		}
-		return dao.addBeneficiary(customerID, beneficiaryaccount, transferLimit,nickname);
+		return dao.addBeneficiary(customerID, beneficiaryaccount, transferLimit, nickname);
 	}
+
 	public HashMap<Integer, Beneficiary> getBeneficiaryList() {
 		if (beneficiaryList == null) {
 			getbeneficiaryList();
@@ -116,4 +124,25 @@ public class Customer{
 		return beneficiaryList;
 	}
 
+	public int addRecurringDeposit(int accountNumber, int period, int amount) {
+		if (accounts.containsKey(accountNumber)) {
+			return dao.addRecurringDeposit(customerID, accountNumber, period, amount);
+		} else {
+			return -1;
+		}
+	}
+	public int addFixedDeposit(int accountNumber,int period,int amount) {
+		if(accounts.containsKey(accountNumber)) {
+			Accounts account = accounts.get(accountNumber);
+			if(account.getBalance()>amount) {
+				return dao.addFixedDeposit(customerID, accountNumber, period, amount);
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return -1;
+		}
+	}
 }

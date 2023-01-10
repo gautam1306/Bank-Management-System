@@ -26,18 +26,6 @@ public class AddBeneficiary extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session =request.getSession();
 		Customer customer = (Customer)session.getAttribute("customer");
@@ -45,7 +33,18 @@ public class AddBeneficiary extends HttpServlet {
 		System.out.println(beneficiaryaccount);
 		String nickname = request.getParameter("nickname");
 		int transferLimit = Integer.parseInt(request.getParameter("transferLimit"));
-		int status = customer.addBeneficiary(beneficiaryaccount, transferLimit,nickname);
-		
+		int statuscode = customer.addBeneficiary(beneficiaryaccount, transferLimit,nickname);
+		String status = null;
+		if(statuscode==1) {
+			status="Account Successfully added to beneficiary";
+		}
+		if(statuscode==23505) {
+			status = "The beneficiary already exists";
+		}
+		if(statuscode==23503) {
+			status ="The beneficiaries account does not exist inside this bank";
+		}
+		session.setAttribute("status",status); 
+		response.sendRedirect("home");
 	}
 }

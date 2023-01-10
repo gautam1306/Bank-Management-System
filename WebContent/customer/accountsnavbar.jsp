@@ -50,7 +50,7 @@ response.setHeader("Pragma", "no-cache");
 <a id="dashboard"href="account">Accounts</a>
 <a id="transactionhistory"href="transactionhistory">Statement</a>
 <a id="accountview"href="accountview">Show Account Details</a>
-<a id="customer-dashboard"href="customer-dashboard">Dashboard</a>	
+<a id="customer-dashboard"href="customer-dashboard"> Dashboard</a>	
 </div>
 </body>
 </html>

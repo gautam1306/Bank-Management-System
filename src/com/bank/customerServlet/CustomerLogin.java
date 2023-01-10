@@ -35,7 +35,7 @@ public class CustomerLogin extends HttpServlet{
 		}
 		else {
 			request.setAttribute("errorMessage", "Invalid user or password");
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher("home").forward(request, response);
 		}
 		
 		}catch(NumberFormatException e) {

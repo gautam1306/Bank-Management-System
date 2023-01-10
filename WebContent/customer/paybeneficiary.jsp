@@ -19,7 +19,6 @@
 <c:forEach var="account" items="${customer.accounts}">
 	<option value="${account.value.accountNumber}">"${account.key}"</option>
 </c:forEach>
-<%=request.getAttribute("transactionstatus")==null?"":request.getAttribute("transactionstatus")%>
 </select>
 <input type="hidden" value="${accountNumber}" name="accountNumber" id="accountNumber">
 <h2>${accountNumber }</h2>

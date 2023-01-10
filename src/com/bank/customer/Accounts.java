@@ -1,7 +1,9 @@
 package com.bank.customer;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Accounts {
 	private int overdraft;
@@ -47,7 +49,12 @@ public class Accounts {
 		return str;
 	}
 	private void setCard() {
-		card = new Card(dao.getCard(accountNumber));
+		ArrayList<Object> list = new ArrayList<>();
+		if(!list.isEmpty()) {
+		card = new Card(list);}
+		else {
+			card=null;
+		}
 	}
 	public int getOverdraft() {
 		return overdraft;

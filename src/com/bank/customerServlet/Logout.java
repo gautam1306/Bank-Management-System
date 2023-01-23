@@ -22,9 +22,12 @@ public class Logout extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		session.removeAttribute("customer");
+		session.removeAttribute("accountant");
+		session.removeAttribute("manager");
+		session.removeAttribute("admin");
 		session.invalidate();
-		
-		response.sendRedirect("");
+		request.setAttribute("errorMessage", "Successfully Logged Out");
+		request.getRequestDispatcher("customer-home").forward(request, response);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

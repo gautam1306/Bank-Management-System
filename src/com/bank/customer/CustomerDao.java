@@ -120,24 +120,26 @@ public class CustomerDao {
 				preparedStatement.setInt(1, customerId);
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 //			System.out.println("Hi inside getAccounts");
-
+					
 					while (resultSet.next()) {
-						int depositid = resultSet.getInt("depositid");
-						FixedDeposits fixeddeposit = new FixedDeposits(customerId, resultSet.getInt("depositid"),
-								resultSet.getInt("accountnumber"), resultSet.getInt("amount"),
-								resultSet.getString("maturityDate"), resultSet.getString("startDate"),
-								resultSet.getFloat("intrestrate"));
+						int depositid = resultSet.getInt("deposit_id");
+						FixedDeposits fixeddeposit = new FixedDeposits(customerId, resultSet.getInt("deposit_id"),
+								resultSet.getInt("account_number"), resultSet.getInt("amount"),
+								resultSet.getString("maturity_date"), resultSet.getString("date_of_deposit"),
+								resultSet.getFloat("interest_rate"));
 						fixedDeposits.put(depositid, fixeddeposit);
-						System.out.println(depositid);
+//						System.out.println(depositid);
 					}
 					if (!fixedDeposits.isEmpty()) {
 						return fixedDeposits;
 					} else {
+//						System.out.println("null");
 						return null;
 					}
 				}
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -164,10 +166,9 @@ public class CustomerDao {
 	public int addFixedDeposit(int customerID, int accountnumber, int period, int amount) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.transferamount"))) {
+					.prepareStatement(resourceBundle.getString("db.transferAmount"))) {
 				preparedStatement.setInt(1, -amount);
 				preparedStatement.setInt(2, accountnumber);
-				preparedStatement.setInt(3, amount);
 				preparedStatement.executeUpdate();
 			}
 			try (PreparedStatement preparedStatement = connection
@@ -180,7 +181,7 @@ public class CustomerDao {
 				preparedStatement.executeUpdate();
 			}
 			try (PreparedStatement preparedStatement = connection
-					.prepareStatement(resourceBundle.getString("db.transferamount"))) {
+					.prepareStatement(resourceBundle.getString("db.transferAmount"))) {
 				preparedStatement.setInt(1, amount);
 				preparedStatement.setInt(2, 1);
 				preparedStatement.setInt(3, -amount);

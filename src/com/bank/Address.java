@@ -21,7 +21,7 @@ public class Address {
 	@Override
 	public String toString() {
 		Formatter formatter = new Formatter();
-		formatter.format("%s,\n%s,\n%s,%s\nPin Code- %d ,", this.house, this.street, this.district, this.state,
+		formatter.format("%s,\n%s,\n%s,%s\nPin Code-%d", this.house, this.street, this.district, this.state,
 				this.pin_code);
 		return formatter.toString();
 	}

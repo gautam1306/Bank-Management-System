@@ -44,7 +44,7 @@ public class AddBeneficiary extends HttpServlet {
 		if(statuscode==23503) {
 			status ="The beneficiaries account does not exist inside this bank";
 		}
-		session.setAttribute("status",status); 
-		response.sendRedirect("home");
+		request.setAttribute("status",status); 
+		request.getRequestDispatcher("customer-home").forward(request, response);
 	}
 }

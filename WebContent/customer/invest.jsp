@@ -22,18 +22,26 @@
 <body> 
                     
 <table>
-<tr><th colspan="3">Recurring Deposit</th></tr>
+<tr><th colspan="4">Recurring Deposit</th></tr>
 <tr><th>Deposit ID</th> <th>Amount</th><th>start date</th></tr>
 <c:forEach var="deposit" items="${customer.recurringDeposit}">
-<tr><td>${deposit.value.depositid}</td><td>${deposit.value.amount}</td><td>${deposit.value.startDate}</td></tr>
+<tr><td>${deposit.value.depositid}</td><td>${deposit.value.amount}</td><td>${deposit.value.startDate}</td>
+<td>
+<form action="recurringDeposit">
+<input type="hidden" value=${deposit.value.depositid} id="depositID" name="depositID">
+<input type="submit" value="select">
+</form>
+</tr>
 </c:forEach>
+<tr><th colspan="4"><a href="openrecurringdeposit"><button>Open Recurring Deposit</button></a>
+</th></tr>
 </table>
-<a href="openrecurringdeposit" class="button">open recurring deposit</a>
 <table>
-<tr><th colspan="3">Fixed Deposit</th></tr>
+<tr><th colspan="4">Fixed Deposit</th></tr>
 <tr><th>Deposit ID</th> <th>Amount</th><th>start date</th></tr>
-<c:forEach var="deposit" items="${customer.recurringDeposit}">
-<tr><td>${deposit.value.depositid}</td><td>${deposit.value.amount}</td><td>${deposit.value.startDate}</td></tr>
+<c:forEach var="deposit" items="${customer.fixedDeposits}">
+<tr><td>${deposit.value.depositId}</td><td>${deposit.value.amount}</td><td>${deposit.value.startDate}</td></tr>
 </c:forEach>
+<tr><th colspan="3"><a href="openf	ixeddeposit"><button>Open Fixed Deposit</button></a></th></tr>
 </table>
 </body>                    

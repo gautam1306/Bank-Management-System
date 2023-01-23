@@ -10,7 +10,8 @@
 		</cookie-config>
 	</session-config>
 	<welcome-file-list>
-	<welcome-file>home</welcome-file></welcome-file-list>
+		<welcome-file>home</welcome-file>
+	</welcome-file-list>
 	<display-name></display-name>
 	<servlet>
 		<servlet-name>CustomerloginPage</servlet-name>
@@ -22,7 +23,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>CustomerDashBoard</servlet-name>
-		<jsp-file>/customer/customerdashboard.jsp</jsp-file>
+		<jsp-file>/customer/customerhome.jsp</jsp-file>
 	</servlet>
 	<servlet>
 		<servlet-name>account</servlet-name>
@@ -34,7 +35,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CustomerDashBoard</servlet-name>
-		<url-pattern>/customer-dashboard</url-pattern>
+		<url-pattern>/customer-home</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>transactionstatement</servlet-name>
@@ -45,12 +46,13 @@
 		<url-pattern>/transaction</url-pattern>
 	</servlet-mapping>
 	<servlet>
-	<servlet-name>paybeneficiary</servlet-name>
-	<jsp-file>/customer/paybeneficiary.jsp</jsp-file>
+		<servlet-name>paybeneficiary</servlet-name>
+		<jsp-file>/customer/paybeneficiary.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>paybeneficiary</servlet-name>
-	<url-pattern>/paybeneficiary</url-pattern></servlet-mapping>
+		<servlet-name>paybeneficiary</servlet-name>
+		<url-pattern>/paybeneficiary</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>transfer</servlet-name>
 		<jsp-file>/customer/transfer.jsp</jsp-file>
@@ -82,7 +84,7 @@
 	<servlet-mapping>
 		<servlet-name>profile</servlet-name>
 		<url-pattern>/profile</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>loan</servlet-name>
 		<jsp-file>/customer/loan.jsp</jsp-file>
@@ -90,59 +92,102 @@
 	<servlet-mapping>
 		<servlet-name>loan</servlet-name>
 		<url-pattern>/loan</url-pattern>
-	</servlet-mapping>	
-	<servlet>
-	<servlet-name>repayment</servlet-name>
-	<jsp-file>/customer/repayment.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-	<servlet-name>repayment</servlet-name>
-	<url-pattern>/repayment</url-pattern>
 	</servlet-mapping>
 	<servlet>
-	<servlet-name>accountview</servlet-name>
-	<jsp-file>/customer/accountview.jsp</jsp-file>
+		<servlet-name>repayment</servlet-name>
+		<jsp-file>/customer/repayment.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>accountview</servlet-name>
-	<url-pattern>/accountview</url-pattern>
+		<servlet-name>repayment</servlet-name>
+		<url-pattern>/repayment</url-pattern>
 	</servlet-mapping>
 	<servlet>
-	<servlet-name>invest</servlet-name>
-	<jsp-file>/customer/invest.jsp</jsp-file>
+		<servlet-name>accountview</servlet-name>
+		<jsp-file>/customer/accountview.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>invest</servlet-name>
-	<url-pattern>/invest</url-pattern>
+		<servlet-name>accountview</servlet-name>
+		<url-pattern>/accountview</url-pattern>
 	</servlet-mapping>
 	<servlet>
-	<servlet-name>Pay</servlet-name>
-	<jsp-file>/customer/pay.jsp</jsp-file>
+		<servlet-name>invest</servlet-name>
+		<jsp-file>/customer/invest.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>Pay</servlet-name>
-	<url-pattern>/pay</url-pattern>	</servlet-mapping>
-	 	<servlet>
-	<servlet-name>openrecurringdeposit</servlet-name>
-	<jsp-file>/customer/openrecurringdeposit.jsp</jsp-file>
+		<servlet-name>invest</servlet-name>
+		<url-pattern>/invest</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Pay</servlet-name>
+		<jsp-file>/customer/pay.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>openrecurringdeposit</servlet-name>
-	<url-pattern>/openrecurringdeposit</url-pattern>
+		<servlet-name>Pay</servlet-name>
+		<url-pattern>/pay</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>openrecurringdeposit</servlet-name>
+		<jsp-file>/customer/openrecurringdeposit.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>openrecurringdeposit</servlet-name>
+		<url-pattern>/openrecurringdeposit</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>employeelogin</servlet-name>
+		<jsp-file>/employee/index.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>employeelogin</servlet-name>
+		<url-pattern>/employeelogin</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>openFixedDeposit</servlet-name>
+		<jsp-file>/customer/openFixedDeposit.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>openFixedDeposit</servlet-name>
+		<url-pattern>/openfixeddeposit</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ManagerHome</servlet-name>
+		<jsp-file>/employee/manager/managerhome.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManagerHome</servlet-name>
+		<url-pattern>/manager-home</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>BranchAdminHome</servlet-name>
+		<jsp-file>/employee/branchAdmin/branchAdminHome.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BranchAdminHome</servlet-name>
+		<url-pattern>/branch_admin-home</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AccountantHome</servlet-name>
+		<jsp-file>/employee/accountant/accountanthome.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AccountantHome</servlet-name>
+		<url-pattern>/accountant-home</url-pattern>
 	</servlet-mapping>
 	<filter>
 		<filter-name>CustomerAuthentication</filter-name>
 		<filter-class>com.bank.customerfilter.CustomerAuthenticationFilter</filter-class>
 	</filter>
 	<filter>
-	<filter-name>AccountAuthentication</filter-name>
-	<filter-class>com.bank.customerfilter.AccountAuthenticationFilter</filter-class>
-	</filter>
-	<!-- <filter-mapping>
 		<filter-name>AccountAuthentication</filter-name>
-		<servlet-name>account</servlet-name>
-		<servlet-name>transactionstatement</servlet-name>
-	</filter-mapping>-->
+		<filter-class>com.bank.customerfilter.AccountAuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AccountAuthentication</filter-name>
+		<url-pattern>/account</url-pattern>
+		<url-pattern>/transaction</url-pattern>
+		<url-pattern>/transactionhistory</url-pattern>
+		<url-pattern>/accountview</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CustomerAuthentication</filter-name>
 		<url-pattern>/add-beneficiary</url-pattern>
@@ -151,9 +196,33 @@
 		<url-pattern>/transaction</url-pattern>
 		<url-pattern>/repayment</url-pattern>
 		<url-pattern>/beneficiary</url-pattern>
-		<url-pattern>/customer-dashboard</url-pattern>
+		<url-pattern>/customer-home</url-pattern>
 		<url-pattern>/logout</url-pattern>
 		<url-pattern>/loan</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>recurringDeposit</servlet-name>
+		<jsp-file>/customer/recurringdeposit.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>recurringDeposit</servlet-name>
+		<url-pattern>/recurringDeposit</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>addCustomer</servlet-name>
+		<jsp-file>/employee/accountant/addCustomer</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>addCustomer</servlet-name>
+		<url-pattern>/addCustomer</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>RecurringDepositAuthentication</filter-name>
+		<filter-class>com.bank.customerfilter.RecurringDepositFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RecurringDepositAuthentication</filter-name>
+		<url-pattern>/recurringDeposit</url-pattern>
 	</filter-mapping>
 	<resource-ref>
 		<description>datasource</description>
@@ -161,9 +230,5 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
-<!-- 	  <listener>
-    <listener-class>
-            com.bank.Routine
-    </listener-class>
-  </listener> -->
+	<!-- <listener> <listener-class> com.bank.Routine </listener-class> </listener> -->
 </web-app>

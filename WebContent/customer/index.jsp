@@ -17,6 +17,7 @@ response.setHeader("Pragma", "no-cache");
             <thead>
                 <tr>
                     <th colspan="2" align ="left">Login Here</th><%=request.getAttribute("errorMessage")==null?"":request.getAttribute("errorMessage") %>
+                    <%request.removeAttribute("errorMessage"); %>
                 </tr>
             </thead>
             <tbody>

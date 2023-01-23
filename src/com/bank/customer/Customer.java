@@ -24,8 +24,6 @@ public class Customer {
 					property.get(5), property.get(6), property.get(7), property.get(8), property.get(9),
 					Integer.parseInt(property.get(10)));
 			accounts = dao.getAccounts(customerId);
-			recurringDeposit = dao.getRecurringDeposit(customerId);
-			fixedDeposits = dao.getFixedDeposits(customerId);
 		}
 	}
 
@@ -70,6 +68,7 @@ public class Customer {
 	}
 
 	public TreeMap<Integer, FixedDeposits> getFixedDeposits() {
+		fixedDeposits = dao.getFixedDeposits(customerID);
 		return fixedDeposits;
 	}
 
@@ -78,6 +77,7 @@ public class Customer {
 	}
 
 	public TreeMap<Integer, RecurringDeposit> getRecurringDeposit() {
+			this.recurringDeposit = dao.getRecurringDeposit(customerID);
 		return recurringDeposit;
 	}
 

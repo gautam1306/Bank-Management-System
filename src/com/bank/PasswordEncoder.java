@@ -1,4 +1,4 @@
-package com.bank.customer;
+package com.bank;
 import org.apache.commons.codec.binary.Base64;
 public class PasswordEncoder {
 	public  String  encode(String password) {

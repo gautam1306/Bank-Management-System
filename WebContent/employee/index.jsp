@@ -12,7 +12,7 @@ response.setHeader("Pragma", "no-cache");
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<form action="employee" method="post">
+<form action="EmployeeLogin" method="post">
         <table border="1" width="30%" cellpadding="3">
             <thead>
                 <tr>

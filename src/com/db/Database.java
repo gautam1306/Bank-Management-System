@@ -12,7 +12,6 @@ public class Database {
 	private static DataSource ds = null; 
 	public static Connection getConnection() {
 		Context ctx;
-		
 		if(ds==null){try {
 			ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/Bank");

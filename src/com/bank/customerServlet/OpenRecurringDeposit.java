@@ -39,15 +39,15 @@ public class OpenRecurringDeposit extends HttpServlet {
 		int status = customer.addRecurringDeposit(accountNumber, period, amount);
 		switch (status) {
 		case 1:
-			session.setAttribute("status", "The Recurring Deposit is successfully added");
+			request.setAttribute("status", "The Recurring Deposit is successfully added");
 			break;
 		case -1:
-			session.setAttribute("status",
+			request.setAttribute("status",
 					"The account that you specified for the recurring deposit is either not associated with this account or else it is an invalid account number");
 			break;
 		case 0:
-			session.setAttribute("status", "There is an error in the data base");
+			request.setAttribute("status", "There is an error in the data base");
 		}
-		response.sendRedirect("customer-dashboard");
+		request.getRequestDispatcher("customer-home").forward(request, response);
 	}
 }

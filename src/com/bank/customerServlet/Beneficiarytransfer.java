@@ -32,7 +32,7 @@ public class Beneficiarytransfer extends HttpServlet {
 		HttpSession session = request.getSession();
 		Customer customer = (Customer) session.getAttribute("customer");
 		Accounts account = customer.getAccounts().get(Integer.parseInt(request.getParameter("account")));
-		int toAccountNumber = (int)session.getAttribute("accountnumber");
+		int toAccountNumber = Integer.parseInt(request.getParameter("accountNumber"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		String description = request.getParameter("description");
 		String mode = request.getParameter("mode");
@@ -41,10 +41,10 @@ public class Beneficiarytransfer extends HttpServlet {
 		if(transferLimit!=-1) {
 		int transfer = customer.getBeneficiaryList().get(toAccountNumber).getTransfer();
 		int status = account.beneficiaryfundtransfer(toAccountNumber, amount, description, mode,transferLimit,transfer);
-		if(status==1) {
+		if(status==0) {
 			request.setAttribute("status","insufficient funds");
 		}
-		if(status==0) {
+		if(status==1) {
 			request.setAttribute("status","transfer was successfull");
 			customer.getBeneficiaryList().get(toAccountNumber).setTransfer(transfer+amount);
 			account.setBalance(account.getBalance()-amount);
@@ -55,7 +55,7 @@ public class Beneficiarytransfer extends HttpServlet {
 		else {
 			request.setAttribute("status", "This account is not added to the beneficiary");
 		}
-		request.getRequestDispatcher("loan").forward(request, response);
+		request.getRequestDispatcher("customer-home").forward(request, response);
 		
 	}
 

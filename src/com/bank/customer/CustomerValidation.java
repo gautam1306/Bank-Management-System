@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 public class CustomerValidation {
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("sql");
-
 	public Customer verify(int customerId, String password) {
 		try (Connection connection = Database.getConnection()) {
 			try (PreparedStatement preparedStatement = connection
@@ -34,7 +33,6 @@ public class CustomerValidation {
 						property.add(Integer.toString(rs.getInt("address_pin_code")));
 						return new Customer(customerId, password, property);
 					}
-
 				}
 			}
 		} catch (SQLException e) {

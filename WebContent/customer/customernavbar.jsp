@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(
-			function() {
-				$('div a[href="' + location.href.split("/").at(-1) + '"]')
-						.addClass('active');
-			});
-	console.log(location.href.split("/").at(-1));
-</script>
+<head>	
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
@@ -46,12 +36,12 @@ body {
 <body>
 
 	<div class="topnav">
-		<a id="dashboard" href="customer-dashboard">Home</a> 
+		<a id="dashboard" href="customer-home">Home</a> 
 		<a id="pay" href="pay">Pay</a>
 		<a id="invest" href="invest">Save</a> <a id="loan" href="loan">Barrow</a>
 		<a id="profile" href="profile">Profile</a>
 		<%
-			if (request.getRequestURI().equals(request.getContextPath() + "/customer-dashboard"))
+			if (request.getRequestURI().equals(request.getContextPath() + "/customer-home"))
 				out.print("<a href=\"logout\">Logout</a>");
 		%>
 	</div>

@@ -16,7 +16,7 @@ import javax.websocket.Session;
 /**
  * Servlet Filter implementation class ccountfilter
  */
-@WebFilter("/ccountfilter")
+@WebFilter("/accountfilter")
 public class AccountAuthenticationFilter implements Filter {
 
     /**
@@ -39,7 +39,7 @@ public class AccountAuthenticationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session =req.getSession();
-		if(session.getAttribute("account")!=null) {
+		if(session.getAttribute("account")!=null|| req.getParameter("account")!=null) {
 		chain.doFilter(request, response);}
 		else {
 			req.getRequestDispatcher("customer-dashboard").forward(request, response);

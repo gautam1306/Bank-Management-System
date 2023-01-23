@@ -8,6 +8,30 @@ public class FixedDeposits {
 	private String maturityDate;
 	private String startDate;
 	private float intrestRate;
+	public int getDepositId() {
+		return depositId;
+	}
+	public int getAccountnumber() {
+		return accountnumber;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public String getMaturityDate() {
+		return maturityDate;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public float getIntrestRate() {
+		return intrestRate;
+	}
+	public int getCustomerId() {
+		return customerId;
+	}
+	public FixedDepositDao getDao() {
+		return dao;
+	}
 	private int customerId;
 	private FixedDepositDao dao = new FixedDepositDao();
 	public FixedDeposits(int customerId,int depositId, int accountnumber, int amount, String maturityDate, String startDate, float intrestRate ) {

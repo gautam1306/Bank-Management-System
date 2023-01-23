@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<%@include file="customernavbar.jsp" %>
+<%@include file="customernavbar.jsp"%>
 
 <head>
 <style>
@@ -24,7 +24,8 @@ table, th, td {
 <body>
 	Recurring Deposit From
 	<table>
-		<form action="recurringdeposit" method="post" onsubmit="return verifyForm()">
+		<form action="recurringdeposit" method="post"
+			onsubmit="return verifyForm()">
 			<tr>
 				<th>Account</th>
 				<td><select name="account" id="account">
@@ -36,14 +37,12 @@ table, th, td {
 			<tr>
 				<th>Enter the monthly investment amount</th>
 				<td><input type="number" id="amount" name="amount"
-					required="required">
-					<p id="amountfeedback"></p></td>
+					required="required"></td>
 			</tr>
 			<tr>
 				<th>Enter the duration of investment</th>
 				<td><input type="number" id=duration name="duration"
 					required="required"></td>
-					<p id="durationfeedback">
 			<tr>
 				<th colspan=2><input type="submit" value="submit"
 					onclick="verifyForm()"></th>
@@ -57,13 +56,17 @@ table, th, td {
 			// If x is Not a Number or less than one or greater than 10
 			let text;
 			if (isNaN(x) || x < 1000) {
-				alert("The amount should be greater than 999");return false;}
+				alert("The amount should be greater than 999");
+				return false;
+			}
 			x = document.getElementById("duration").value;
 			if (isNaN(x) || x > 100) {
-				alert("The time duration should be less than or equal to 100");return false;
+				alert("The time duration should be less than or equal to 100");
+				return false;
 			}
-			if(x<0){
-				alert("duration cannot be negative");	return false;
+			if (x < 0) {
+				alert("duration cannot be negative");
+				return false;
 			}
 		}
 	</script>

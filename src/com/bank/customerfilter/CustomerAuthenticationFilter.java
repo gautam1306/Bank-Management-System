@@ -36,7 +36,6 @@ public class CustomerAuthenticationFilter implements Filter {
 //        System.out.println(loginURI);
         boolean loggedIn = session != null && session.getAttribute("customer") != null;
         boolean loginRequest = request1.getRequestURI().equals(loginURI);
-
         if (loggedIn || loginRequest) {
             chain.doFilter(request1, response1);
         } else {

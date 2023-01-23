@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html>
 <style>
+table{
+	width:100%;
+}
 table, th, td {
 	  border: 1px solid;
 	  margin-left: auto;
@@ -27,7 +30,7 @@ table, th, td {
 <c:if test="${transactions[0]!=null}">
 <table>
 <tr><th>Transaction ID</th>
-<th>Account Number</th><th>Type</th><th>Transfer Amount</th><th>Description</th><th>Balance</th></tr>
+<th>Account Number</th><th>Type</th><th>Date of Transfer<th>Transfer Amount</th><th>Description</th><th>Balance</th></tr>
 <c:forEach var="transaction" items="${transactions}">
 	<tr>
 	<td><c:out value="${transaction.transaction_number}"/></td>
@@ -49,6 +52,7 @@ table, th, td {
 	${"Credit"}
 	</c:when>	
 	</c:choose></td>
+	<td><c:out value="${transaction.date_of_transaction}"/></td>
 	<td><c:out value="${transaction.transferamount}"/></td>
 	<td><c:out value="${transaction.description}"></c:out></td>
 	<td><c:out value="${transaction.balance }"></c:out>

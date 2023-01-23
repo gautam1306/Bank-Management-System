@@ -13,6 +13,8 @@
 <%if(session.getAttribute("account")!=null){
 	session.removeAttribute("account");}%>
 <style>
+	table{
+	width:100%;}
 	table, th, td {
 	  border: 1px solid;
 	  margin-left: auto;
@@ -26,7 +28,7 @@
 </style>
 <body>
 	<%=session.getAttribute("status")==null?"":session.getAttribute("status") %>
-	<%if((String)session.getAttribute("status")==null)session.removeAttribute("status");%>
+	<%if((String)session.getAttribute("status")!=null)session.removeAttribute("status");%>
 <%-- 
 	<c:out value="${customer.profile}"></c:out><br>
  --%><table style="width:50%">

@@ -38,7 +38,7 @@ public class RepaymentServlet extends HttpServlet {
 		if(x==-1) {
 			request.setAttribute("status","You are trying to access somebody elses loan account");
 		}
-		request.getRequestDispatcher("loan").forward(request, response);
+		request.getRequestDispatcher("customer-home").forward(request, response);
 		
 	}
 

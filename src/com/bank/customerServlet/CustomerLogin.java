@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.bank.PasswordEncoder;
 import com.bank.customer.Customer;
 import com.bank.customer.CustomerValidation;
-import com.bank.customer.PasswordEncoder;
 
 @WebServlet("/customer")
 public class CustomerLogin extends HttpServlet{
@@ -31,7 +31,7 @@ public class CustomerLogin extends HttpServlet{
 			Cookie cookie = new Cookie("customerId",Integer.toString(customerID));
 			response.addCookie(cookie);
 			session.setAttribute("customer", customer);
-			response.sendRedirect("customer-dashboard");	
+			response.sendRedirect("customer-home");	
 		}
 		else {
 			request.setAttribute("errorMessage", "Invalid user or password");

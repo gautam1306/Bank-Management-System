@@ -5,6 +5,19 @@
 
 
 <html>
+<script>var a=0;
+function show()
+{
+    if(a==1){
+    	a=0;
+        document.getElementById("form").style.display="none";
+    }
+    else{
+    	a=1;
+        document.getElementById("form").style.display="block";
+    }
+}
+</script>
 <style>
 table, th, td {
 	  border: 1px solid;
@@ -29,5 +42,11 @@ table, th, td {
 <tr><th>Pan </th><td>${customer.profile.panCardCode}</td></tr>
 <tr><th>Gender </th><td>${customer.profile.gender}</td></tr>
 <tr><th>Address</th> <td>${customer.profile.address}</td></tr>
+<tr><th><button onclick="show()">CHANGE PASSWORD</button></th></tr>
 </table></body>
+<form  name="myForm" id="form" onsubmit="return  formatCheck({28:1,29:7})" action="changePasswordServlet"  method="post"  style="display:none;">
+<tr><th>ENTER THE OLD-PASSWORD :<input type="text" name="oldPassword"><br></th></tr>
+<tr><th>ENTER THE NEW-PASSWORD :<input type="text" name="newPassword"><br></th></tr>
+<p style="font-size: 12px;" >* THE PASSWORD [8 - 15] CHARACTERS MUST ATLEAT HAVE A 1 UPPERCASE , 1 LOWERCASE ,1 NUMBER AND 1 SPECIAL CHARACTER</p>
+<input type="submit" value="CONFIRM">
 </html>

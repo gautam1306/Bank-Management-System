@@ -31,23 +31,27 @@ public class TransferServlet extends HttpServlet {
 		String description = request.getParameter("description");
 		String mode = request.getParameter("mode");
 		int result = account.fundtransfer(toAccountNumber, amount, description, mode);
-		if(result ==1) {
+		switch(result) {
+		case 1: {
 //			success
 			session.setAttribute("status", "Transaction was successfull");
+			break;
 		}
-		if(result==-2) {
+		case -2: {
 			session.setAttribute("status", "This transaction exceeds the daily transfer limit");
 //			Daily transfer limit
+			
 		}
-		if(result==0) {
+		case 0: {
 //			insufficient funds
 			session.setAttribute("status", "This account has insufficient funds for this transaction");
 		}
-		if(result ==-1) {
+		case -1: {
 			session.setAttribute("status", "The account number is invalid for this entry");
 //			enter a different account number
 		}
-		response.sendRedirect("customer-dashboard");
+		}
+		response.sendRedirect("customer-home");
 	}
 
 }
